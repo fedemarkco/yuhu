@@ -10,7 +10,7 @@ El proyecto se encuentra en un contenedor Docker, para poder levantarlo, se tien
 
 ```
 cd yuhu
-docker-compose up
+docker-compose up --build
 ```
 He puesto que cree un superusuario con los siguientes datos (para la autenticación):
 <br>Username: Marco
