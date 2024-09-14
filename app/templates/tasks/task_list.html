@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Tareas</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">Cerrar sesión</a>
+        <h1>Lista de Tareas</h1>
+        <a href="{% url 'task_create' %}">Crear nueva tarea</a>
+
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    <strong>{{ task.title }}</strong>
+                    <p>{{ task.email }}</p>
+                    <p>{{ task.description }}</p>
+                    {% if task.due_date %}
+                        <p>{{ task.due_date }}</p>
+                    {% endif %}
+                    <a href="{% url 'task_update' task.id %}">Editar</a> | 
+                    <a href="{% url 'task_delete' task.id %}">Eliminar</a>
+                </li>
+            {% empty %}
+                <li>No hay tareas.</li>
+            {% endfor %}
+        </ul>
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; primera</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
+                {% endif %}
+
+                <span class="current">
+                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">siguiente</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">última &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+    {% else %}
+        <p>Debes iniciar sesión para ver la lista de tareas.</p>
+    {% endif %}
+</body>
+</html>
